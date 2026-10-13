@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coca-Cola &mdash; Pure Refreshment | Scrollytelling Experience</title>
+  <meta name="description" content="An interactive, cinematic 300-frame scrollytelling experience showcasing the iconic Coca-Cola can, chilled condensation, and explosive refreshment.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Bebas+Neue&family=Outfit:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+    <!-- Material Symbols & Tailwind CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            obsidian: "#050505",
+            midnight: "#0D0D0D",
+            crimson: "#bc0005",
+            "crimson-glow": "#ea0008",
+            "crimson-deep": "#4A0003",
+            frost: "#c8f3ff",
+            ice: "#e0f2fe",
+          },
+          fontFamily: {
+            display: ["'Plus Jakarta Sans'", "sans-serif"],
+            headline: ["'Barlow Condensed'", "sans-serif"],
+          },
+          boxShadow: {
+            'glow-red': '0 0 35px -5px rgba(234, 0, 8, 0.45)',
+            'glow-red-lg': '0 0 60px -10px rgba(234, 0, 8, 0.65)',
+            'glow-ice': '0 0 25px -5px rgba(200, 243, 255, 0.35)',
+          }
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loader-screen" class="loader-screen">
+    <div class="loader-content">
+      <div class="loader-logo">
+        <span class="coca-title">Coca-Cola</span>
+        <span class="loader-badge">REAL MAGIC</span>
+      </div>
+      <div class="loader-bar-wrapper">
+        <div id="loader-progress-bar" class="loader-progress-bar"></div>
+      </div>
+      <div class="loader-meta">
+        <span id="loader-status">Preloading cinematic frames...</span>
+        <span id="loader-percentage">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transparent Navigation Bar -->
+  <header id="main-nav" class="main-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      <!-- Coca-Cola Brand Logo -->
+      <a href="#experience" class="flex items-center gap-3 group" title="Coca-Cola - Real Magic">
+        <span class="font-coke-headline text-3xl font-extrabold italic tracking-tight text-white group-hover:text-crimson-glow transition-colors drop-shadow-[0_0_15px_rgba(234,0,8,0.6)]">Coca-Cola</span>
+        <span class="hidden sm:inline-block px-2.5 py-0.5 text-[9px] font-bold tracking-widest text-frost uppercase rounded-full bg-white/5 border border-white/10">Real Magic</span>
+      </a>
+
+      <!-- Desktop Transparent Navigation Pill Menu -->
+      <nav class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md shadow-inner">
+        <a href="#experience" class="nav-link text-xs uppercase font-semibold tracking-wider px-3.5 py-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/10 transition-all active-nav">Experience</a>
+        <a href="#story" class="nav-link text-xs uppercase font-semibold tracking-wider px-3.5 py-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/10 transition-all">Our Story</a>
+        <a href="#collection" class="nav-link text-xs uppercase font-semibold tracking-wider px-3.5 py-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/10 transition-all">Beverages</a>
+        <a href="#campaign" class="nav-link text-xs uppercase font-semibold tracking-wider px-3.5 py-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/10 transition-all">Sensation</a>
+        <a href="#moments" class="nav-link text-xs uppercase font-semibold tracking-wider px-3.5 py-1.5 rounded-full text-neutral-300 hover:text-white hover:bg-white/10 transition-all">Moments</a>
+      </nav>
+
+      <!-- Right Action Items -->
+      <div class="flex items-center gap-3">
+        <a href="#contact" id="nav-contact-btn" class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-crimson hover:bg-crimson-glow border border-crimson-glow/40 transition-all shadow-glow-red hover:scale-105" title="Contact Coca-Cola">
+          <span>Contact</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-xl text-neutral-300 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" aria-label="Toggle navigation menu">
+          <span class="material-symbols-outlined text-2xl" id="menu-icon">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-drawer" class="lg:hidden hidden px-6 py-6 border-b border-white/10 bg-obsidian/95 backdrop-blur-2xl transition-all">
+      <div class="flex flex-col space-y-3">
+        <a href="#experience" class="mobile-nav-link text-sm uppercase font-semibold tracking-wider px-4 py-2.5 rounded-xl text-neutral-300 hover:text-white hover:bg-white/5 transition-all">Experience</a>
+        <a href="#story" class="mobile-nav-link text-sm uppercase font-semibold tracking-wider px-4 py-2.5 rounded-xl text-neutral-300 hover:text-white hover:bg-white/5 transition-all">Our Story</a>
+        <a href="#collection" class="mobile-nav-link text-sm uppercase font-semibold tracking-wider px-4 py-2.5 rounded-xl text-neutral-300 hover:text-white hover:bg-white/5 transition-all">Beverages</a>
+        <a href="#campaign" class="mobile-nav-link text-sm uppercase font-semibold tracking-wider px-4 py-2.5 rounded-xl text-neutral-300 hover:text-white hover:bg-white/5 transition-all">Sensation</a>
+        <a href="#moments" class="mobile-nav-link text-sm uppercase font-semibold tracking-wider px-4 py-2.5 rounded-xl text-neutral-300 hover:text-white hover:bg-white/5 transition-all">Moments</a>
+        <div class="pt-3 border-t border-white/10 sm:hidden">
+          <a href="#contact" class="mobile-nav-link w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-crimson hover:bg-crimson-glow transition-all shadow-glow-red">
+            <span>Contact</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Scrollytelling Section -->
+  <main id="experience" class="scroll-track">
+    <div class="sticky-viewport">
+      <!-- Background Ambient Glow & Particles -->
+      <div class="ambient-glow ambient-glow-1"></div>
+      <div class="ambient-glow ambient-glow-2"></div>
+
+      <!-- Main Canvas for 300 Frames -->
+      <canvas id="animation-canvas" class="animation-canvas"></canvas>
+
+      <!-- Hero Top Branding & Heading -->
+      <div id="hero-header" class="hero-header">
+        <h1 id="hero-main-title" class="hero-main-title">Coca-Cola</h1>
+        <p id="hero-subtitle" class="hero-subtitle">Real Magic in Every Sip</p>
+      </div>
+
+      <!-- Scrollytelling Cinematic Text Overlays -->
+      <div class="story-overlay-container">
+        <!-- Chapter 1 (Frames 1-60) -->
+        <div class="story-card active" data-story="1">
+          <span class="story-badge">CHAPTER 01 &bull; GENESIS</span>
+          <h2 class="story-title">THE SPARK OF REAL MAGIC</h2>
+          <p class="story-desc">From within the crimson void, carbonated vitality begins to ignite. The iconic taste awakens drop by drop.</p>
+        </div>
+
+        <!-- Chapter 2 (Frames 61-135) -->
+        <div class="story-card" data-story="2">
+          <span class="story-badge">CHAPTER 02 &bull; EMERGENCE</span>
+          <h2 class="story-title">ICE COLD PERFECTION</h2>
+          <p class="story-desc">Beaded condensation clings to classic red aluminum. Chilled to the exact optimum temperature of pure satisfaction.</p>
+        </div>
+
+        <!-- Chapter 3 (Frames 136-215) -->
+        <div class="story-card" data-story="3">
+          <span class="story-badge">CHAPTER 03 &bull; REVELATION</span>
+          <h2 class="story-title">ORIGINAL FORMULA. UNTOUCHED.</h2>
+          <p class="story-desc">The legendary script revolves. A timeless symphony of caramel notes, effervescent bubbles, and secret botanicals.</p>
+        </div>
+
+        <!-- Chapter 4 (Frames 216-300) -->
+        <div class="story-card" data-story="4">
+          <span class="story-badge">CHAPTER 04 &bull; DETONATION</span>
+          <h2 class="story-title">FEEL THE EXPLOSION</h2>
+          <p class="story-desc">A burst of refreshing liquid wings erupts into orbit. Crisp, bold, exhilarating. Taste the feeling.</p>
+        </div>
+      </div>
+
+      <!-- Scroll Down Indicator Hint -->
+      <div id="scroll-hint" class="scroll-hint">
+        <div class="mouse-icon">
+          <div class="wheel"></div>
+        </div>
+        <span>SCROLL DOWN TO ANIMATE</span>
+      </div>
+
+
+    </div>
+  </main>
+
+<!-- Brand Story Section ("Some Things Just Bring Us Together") Dark Luxury Editorial -->
+<section class="py-28 lg:py-36 bg-midnight text-white relative border-b border-white/5" id="story">
+<div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+<!-- Image with glowing ambient backlight and dark luxury frame -->
+<div class="lg:col-span-6 order-2 lg:order-1 relative">
+<div class="absolute -inset-2 bg-gradient-to-r from-crimson/30 via-transparent to-crimson-deep/40 rounded-3xl blur-2xl opacity-60"></div>
+<div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
+<img alt="Friends sharing cold Coca-Cola bottles in warm golden light" class="w-full h-[520px] object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95 contrast-105" src="assets/gathering-editorial.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent"></div>
+<!-- Glass Quote Card Overlay -->
+<div class="absolute bottom-6 left-6 right-6 glass-dark border border-white/15 p-6 rounded-2xl backdrop-blur-md">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-crimson animate-pulse"></span>
+<span class="text-[10px] uppercase font-bold tracking-widest text-frost">The Magic Of Connection</span>
+</div>
+<p class="text-base sm:text-lg font-medium text-neutral-100 leading-snug italic font-display">
+                "There is no table too crowded when ice-cold Coca-Cola is poured."
+              </p>
+</div>
+</div>
+</div>
+<!-- Typography & Heritage Content -->
+<div class="lg:col-span-6 order-1 lg:order-2 flex flex-col justify-center space-y-6">
+<div class="inline-flex items-center gap-2 text-crimson-glow font-bold tracking-widest text-xs uppercase">
+<span class="h-px w-8 bg-crimson-glow"></span>
+            Heritage &amp; Sensory Connection
+          </div>
+<h2 class="font-coke-headline text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tight text-white font-extrabold leading-[0.92]">
+            Some Things Just <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">Bring Us Together.</span>
+</h2>
+<p class="text-xl text-neutral-300 font-light leading-relaxed">
+            From rooftop sunsets to shared meals beneath string lights, Coca-Cola is the sparkling pulse that turns any gathering into an unforgettable memory.
+          </p>
+<p class="text-neutral-400 leading-relaxed font-light text-base">
+            It starts with that unmistakable snap of the crown, the crisp hiss of escaping gas, and the frosty condensation dripping down the glass. For over a century across 200 nations, billions have paused their day to savor that exact same chill and authentic uplift.
+          </p>
+<div class="pt-6 grid grid-cols-3 gap-4 border-t border-white/10">
+<div class="border-l-2 border-crimson pl-4">
+<p class="text-3xl font-extrabold font-coke-headline text-white">1886</p>
+<p class="text-[11px] uppercase text-neutral-400 tracking-wider">Original Origin</p>
+</div>
+<div class="border-l-2 border-crimson pl-4">
+<p class="text-3xl font-extrabold font-coke-headline text-white">200+</p>
+<p class="text-[11px] uppercase text-neutral-400 tracking-wider">Nations United</p>
+</div>
+<div class="border-l-2 border-crimson pl-4">
+<p class="text-3xl font-extrabold font-coke-headline text-frost">ONE</p>
+<p class="text-[11px] uppercase text-neutral-400 tracking-wider">Iconic Recipe</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Showcase Lineup: Dark Gallery with Rim Lighting -->
+<section class="py-28 lg:py-36 bg-obsidian text-white relative border-b border-white/5" id="collection">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+<span class="text-xs font-bold uppercase tracking-widest text-frost bg-white/5 border border-white/10 px-4 py-1.5 rounded-full inline-block mb-3">
+          Curated Refreshment
+        </span>
+<h2 class="font-coke-headline text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tight text-white font-extrabold">
+          Find Your Coca-Cola.
+        </h2>
+<p class="mt-4 text-lg text-neutral-400 font-light max-w-2xl mx-auto">
+          From the legendary original to zero sugar precision and crisp silver effervescence, select your personal standard of cold refreshment.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-8">
+<!-- Product Card 1: Original Taste -->
+<div class="group relative rounded-3xl bg-midnight/80 p-8 border border-white/10 hover:border-crimson/60 transition-all duration-500 hover:shadow-glow-red hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
+<div class="absolute -top-24 -left-24 w-48 h-48 bg-crimson/20 rounded-full blur-3xl pointer-events-none group-hover:bg-crimson/40 transition-colors"></div>
+<div>
+<div class="flex items-center justify-between mb-4 relative z-10">
+<span class="px-3 py-1 rounded-full text-xs font-bold tracking-wider bg-crimson text-white uppercase shadow-sm border border-red-500/40">
+                The Original
+              </span>
+<span class="text-xs font-semibold text-frost uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">ac_unit</span> 330ml Can
+              </span>
+</div>
+<!-- Product Visual -->
+<div class="h-72 w-full flex items-center justify-center py-4 relative">
+<div class="absolute w-44 h-44 bg-crimson/20 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+<img alt="Coca-Cola Original Taste classic red can" class="h-64 w-auto object-contain z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_20px_30px_rgba(234,0,8,0.35)]" src="assets/can-original.png"/>
+</div>
+<h3 class="font-coke-headline text-3xl font-extrabold uppercase text-white mt-6 group-hover:text-crimson-glow transition-colors">
+              Coca-Cola Original
+            </h3>
+<p class="mt-2 text-neutral-400 text-sm leading-relaxed font-light">
+              The timeless authentic formula unchanged since 1886. Rich effervescence, delicious sweetness, and unmatched icy satisfaction.
+            </p>
+</div>
+<div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between relative z-10">
+<span class="text-[11px] uppercase font-bold tracking-widest text-neutral-400">Classic Formula</span>
+<a class="inline-flex items-center gap-1.5 text-xs uppercase font-extrabold text-white group-hover:text-crimson-glow tracking-wider transition-colors" href="#experience">
+<span>Discover</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1 text-crimson">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Product Card 2: Zero Sugar -->
+<div class="group relative rounded-3xl bg-midnight/80 p-8 border border-white/10 hover:border-neutral-400/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
+<div class="absolute -top-24 -left-24 w-48 h-48 bg-neutral-700/20 rounded-full blur-3xl pointer-events-none group-hover:bg-neutral-600/30 transition-colors"></div>
+<div>
+<div class="flex items-center justify-between mb-4 relative z-10">
+<span class="px-3 py-1 rounded-full text-xs font-bold tracking-wider bg-black text-white uppercase shadow-sm border border-neutral-700">
+                Zero Sugar
+              </span>
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-widest">0 Calories</span>
+</div>
+<!-- Product Visual -->
+<div class="h-72 w-full flex items-center justify-center py-4 relative">
+<div class="absolute w-44 h-44 bg-neutral-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+<img alt="Coca-Cola Zero Sugar can on chilled ice bed" class="h-64 w-auto object-contain z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]" src="assets/can-zero.png"/>
+</div>
+<h3 class="font-coke-headline text-3xl font-extrabold uppercase text-white mt-6 group-hover:text-neutral-200 transition-colors">
+              Coca-Cola Zero Sugar
+            </h3>
+<p class="mt-2 text-neutral-400 text-sm leading-relaxed font-light">
+              Pure Coca-Cola taste with zero calories. Engineered for intense refreshment with crisp, clean finish and zero compromise.
+            </p>
+</div>
+<div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between relative z-10">
+<span class="text-[11px] uppercase font-bold tracking-widest text-neutral-400">Zero Calorie</span>
+<a class="inline-flex items-center gap-1.5 text-xs uppercase font-extrabold text-white group-hover:text-frost tracking-wider transition-colors" href="#experience">
+<span>Discover</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1 text-frost">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Product Card 3: Diet Coke -->
+<div class="group relative rounded-3xl bg-midnight/80 p-8 border border-white/10 hover:border-frost/40 transition-all duration-500 hover:shadow-glow-ice hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
+<div class="absolute -top-24 -left-24 w-48 h-48 bg-frost/10 rounded-full blur-3xl pointer-events-none group-hover:bg-frost/20 transition-colors"></div>
+<div>
+<div class="flex items-center justify-between mb-4 relative z-10">
+<span class="px-3 py-1 rounded-full text-xs font-bold tracking-wider bg-white/10 text-white uppercase shadow-sm border border-white/20">
+                Light &amp; Crisp
+              </span>
+<span class="text-xs font-semibold text-frost uppercase tracking-widest">Since 1982</span>
+</div>
+<!-- Product Visual -->
+<div class="h-72 w-full flex items-center justify-center py-4 relative">
+<div class="absolute w-44 h-44 bg-frost/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+<img alt="Silver Diet Coke can with crisp water droplets" class="h-64 w-auto object-contain z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_20px_30px_rgba(200,243,255,0.15)]" src="assets/can-diet.png"/>
+</div>
+<h3 class="font-coke-headline text-3xl font-extrabold uppercase text-white mt-6 group-hover:text-frost transition-colors">
+              Diet Coke
+            </h3>
+<p class="mt-2 text-neutral-400 text-sm leading-relaxed font-light">
+              Distinct, light flavor profile featuring a brisk, thirst-quenching bite and subtle bubbly citrus effervescence.
+            </p>
+</div>
+<div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between relative z-10">
+<span class="text-[11px] uppercase font-bold tracking-widest text-neutral-400">Crisp Finish</span>
+<a class="inline-flex items-center gap-1.5 text-xs uppercase font-extrabold text-white group-hover:text-frost tracking-wider transition-colors" href="#experience">
+<span>Discover</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:translate-x-1 text-frost">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Liquid Sensation & Pour Feature Section -->
+<section class="relative py-28 lg:py-36 bg-gradient-to-b from-obsidian via-crimson-deep/60 to-obsidian text-white overflow-hidden border-b border-white/5" id="campaign">
+<div class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
+<!-- Left Content -->
+<div class="lg:col-span-6 space-y-7">
+<div class="inline-flex items-center gap-2 text-white font-bold tracking-widest text-xs uppercase bg-black/50 border border-crimson/40 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-glow-red">
+<span class="w-2 h-2 rounded-full bg-crimson shadow-[0_0_8px_#ea0008] animate-ping"></span>
+            Sensory Highlight · Dynamic Pour
+          </div>
+<h2 class="font-coke-headline text-5xl sm:text-6xl lg:text-7xl uppercase font-black tracking-tight text-white leading-[0.9]">
+            REFRESH YOUR <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-frost to-white/70">EVERYDAY.</span>
+</h2>
+<p class="text-xl text-neutral-300 font-light max-w-lg leading-relaxed">
+            The sensory rush of carbonation meeting crystal ice. Hear the hiss, watch the amber liquid swirl, and awaken every single taste bud.
+          </p>
+<!-- Sensory Points -->
+<div class="space-y-4 pt-2">
+<div class="glass-dark border border-white/10 p-4 rounded-2xl flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-crimson/20 border border-crimson/40 flex items-center justify-center text-crimson-glow">
+<span class="material-symbols-outlined text-xl">bubble_chart</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white uppercase tracking-wider">Effervescence Rush</p>
+<p class="text-xs text-neutral-400">Micro-bubbles that fizz continuously across cold clear ice cubes</p>
+</div>
+</div>
+<div class="glass-dark border border-white/10 p-4 rounded-2xl flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-frost/10 border border-frost/30 flex items-center justify-center text-frost">
+<span class="material-symbols-outlined text-xl">ac_unit</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white uppercase tracking-wider">Ice-Cold Sensation</p>
+<p class="text-xs text-neutral-400">Best enjoyed poured at 3°C to unlock the crispest carbonated notes</p>
+</div>
+</div>
+<div class="glass-dark border border-white/10 p-4 rounded-2xl flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">vital_signs</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white uppercase tracking-wider">Instant Pick-Me-Up</p>
+<p class="text-xs text-neutral-400">That crisp first sip that resets your day and revitalizes your senses</p>
+</div>
+</div>
+</div>
+<div class="pt-4">
+<a class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-obsidian hover:bg-neutral-200 font-extrabold text-sm uppercase tracking-wider transition-all shadow-xl hover:scale-105" href="#experience">
+<span>Experience The Taste</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Right Cinematic Full Bleed Dark Pour Image -->
+<div class="lg:col-span-6 relative flex justify-center">
+<div class="relative w-full rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-black group">
+<img alt="Cinematic dark carbonated cola poured into tall curved glass filled with ice cubes" class="w-full h-[520px] object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-105 contrast-110" src="assets/pour-luxury.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
+<!-- Sensory pill tags floating over image -->
+<div class="absolute top-6 right-6 glass-dark border border-white/20 px-3.5 py-1.5 rounded-full flex items-center gap-2 backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-frost animate-ping"></span>
+<span class="text-[11px] font-bold uppercase tracking-widest text-frost">3°C Chilled Pour</span>
+</div>
+<div class="absolute bottom-6 left-6 right-6 glass-dark border border-white/15 p-5 rounded-2xl backdrop-blur-md flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase font-bold tracking-widest text-neutral-400">Serving Suggestion</p>
+<p class="text-lg font-bold font-coke-headline uppercase text-white mt-0.5">Serve Over Clear Ice With Lemon</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-crimson flex items-center justify-center text-white shadow-glow-red">
+<span class="material-symbols-outlined text-xl">restaurant</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Moments Together Gallery Section -->
+<section class="py-28 lg:py-36 bg-midnight text-white relative border-b border-white/5" id="moments">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-crimson-glow bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full inline-block mb-3">
+            Shared Connection
+          </span>
+<h2 class="font-coke-headline text-5xl sm:text-6xl lg:text-7xl uppercase tracking-tight text-white font-extrabold">
+            Made for Moments Together.
+          </h2>
+</div>
+<p class="text-neutral-400 max-w-md font-light text-base md:text-lg">
+          Whether laughing around a backyard grill or gathered on a quiet balcony, Coca-Cola elevates the conversation.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<!-- Large visual card -->
+<div class="lg:col-span-8 rounded-3xl overflow-hidden relative border border-white/10 shadow-2xl group min-h-[460px]">
+<img alt="Friends enjoying drinks and burgers at picnic table" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95" src="assets/gathering-editorial.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8 text-white">
+<span class="px-3 py-1 rounded-full text-xs font-bold tracking-wider bg-crimson text-white uppercase inline-block mb-3 border border-red-500/30">
+              Community
+            </span>
+<h3 class="font-coke-headline text-3xl sm:text-4xl font-extrabold uppercase">The Dinner Table Spark</h3>
+<p class="text-neutral-300 text-sm sm:text-base mt-2 max-w-xl font-light">
+              Passing bottles, clinking glasses, sharing old stories and making new traditions together under golden late-afternoon skies.
+            </p>
+</div>
+</div>
+<!-- 2 Side Cards -->
+<div class="lg:col-span-4 flex flex-col justify-between space-y-6">
+<div class="rounded-3xl p-8 bg-obsidian border border-white/10 hover:border-white/20 transition-all flex-1 flex flex-col justify-center">
+<div class="w-12 h-12 rounded-2xl bg-crimson/20 border border-crimson/40 flex items-center justify-center text-crimson-glow mb-4">
+<span class="material-symbols-outlined text-2xl">celebration</span>
+</div>
+<h4 class="font-coke-headline text-3xl font-extrabold uppercase text-white">Unfiltered Laughter</h4>
+<p class="mt-2 text-sm text-neutral-400 leading-relaxed font-light">
+              Real refreshment is more than taste—it is the feeling of unwinding completely with the people who matter most.
+            </p>
+</div>
+<div class="rounded-3xl p-8 bg-obsidian border border-white/10 hover:border-white/20 transition-all flex-1 flex flex-col justify-center">
+<div class="w-12 h-12 rounded-2xl bg-frost/10 border border-frost/30 flex items-center justify-center text-frost mb-4">
+<span class="material-symbols-outlined text-2xl">local_pizza</span>
+</div>
+<h4 class="font-coke-headline text-3xl font-extrabold uppercase text-white">The Perfect Pairing</h4>
+<p class="mt-2 text-sm text-neutral-400 leading-relaxed font-light">
+              From artisan pizza to savory charcoal barbecue, nothing cuts through rich flavors like an ice-cold Coca-Cola.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA: Volcanic Midnight & Crimson Glow -->
+<section class="py-28 lg:py-36 bg-obsidian text-white relative overflow-hidden border-b border-white/5">
+<div class="absolute inset-0 radial-volcano pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-crimson/30 blur-[130px] pointer-events-none"></div>
+<div class="max-w-5xl mx-auto px-6 lg:px-12 text-center relative z-10 space-y-8">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs uppercase font-extrabold tracking-widest text-white backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-crimson animate-ping"></span>
+        Taste The Feeling
+      </div>
+<h2 class="font-coke-headline text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase tracking-tight leading-[0.88] text-white drop-shadow-[0_0_50px_rgba(234,0,8,0.5)]">
+        MAKE THE MOMENT.
+      </h2>
+<p class="text-lg sm:text-2xl text-neutral-300 max-w-2xl mx-auto font-light leading-relaxed">
+        Discover the legendary taste and sensory effervescence that make Coca-Cola iconic. Ready for an ice-cold pour?
+      </p>
+<div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+<a class="w-full sm:w-auto px-10 py-5 rounded-full bg-white text-obsidian hover:bg-neutral-200 font-extrabold text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_0_35px_rgba(255,255,255,0.4)] hover:scale-105" href="#collection">
+          Explore Our Beverages
+        </a>
+<a class="w-full sm:w-auto px-10 py-5 rounded-full border border-white/30 hover:border-white text-white font-bold text-sm uppercase tracking-wider transition-all duration-300 backdrop-blur-md bg-white/5 hover:bg-white/10" href="#experience">
+          Back to Top
+        </a>
+</div>
+</div>
+</section>
+<!-- Clean Minimal Contact Section: Coca-Cola Luxury -->
+<section class="py-24 lg:py-32 bg-midnight text-white relative border-b border-white/5" id="contact">
+  <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none"></div>
+  <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-crimson/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <!-- Left Column: Heading & Contact Channels -->
+      <div class="lg:col-span-5 space-y-8">
+        <div>
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-frost bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full mb-4">
+            <span class="w-2 h-2 rounded-full bg-crimson animate-ping"></span>
+            Get In Touch · Real Magic
+          </span>
+          <h2 class="font-coke-headline text-5xl sm:text-6xl uppercase tracking-tight text-white font-extrabold leading-[0.92]">
+            CONNECT WITH <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-crimson-glow">COCA-COLA.</span>
+          </h2>
+          <p class="mt-4 text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
+            Have questions about our beverages, partnerships, or media inquiries? Reach out to our global team and let's craft real magic together.
+          </p>
+        </div>
+
+        <div class="space-y-4 pt-2">
+          <!-- Item 1: Phone -->
+          <div class="glass-dark border border-white/10 p-4 rounded-2xl flex items-center gap-4 hover:border-white/20 transition-all">
+            <div class="w-11 h-11 rounded-xl bg-crimson/20 border border-crimson/40 flex items-center justify-center text-crimson-glow flex-shrink-0">
+              <span class="material-symbols-outlined text-xl">call</span>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-neutral-400">Consumer Care</p>
+              <p class="text-sm font-semibold text-white">1-800-GET-COKE (1-800-438-2653)</p>
+            </div>
+          </div>
+
+          <!-- Item 2: Email -->
+          <div class="glass-dark border border-white/10 p-4 rounded-2xl flex items-center gap-4 hover:border-white/20 transition-all">
+            <div class="w-11 h-11 rounded-xl bg-frost/10 border border-frost/30 flex items-center justify-center text-frost flex-shrink-0">
+              <span class="material-symbols-outlined text-xl">mail</span>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-neutral-400">Direct Inquiries</p>
+              <p class="text-sm font-semibold text-white">contact@coca-cola.com</p>
+            </div>
+          </div>
+
+          <!-- Item 3: Headquarters -->
+          <div class="glass-dark border border-white/10 p-4 rounded-2xl flex items-center gap-4 hover:border-white/20 transition-all">
+            <div class="w-11 h-11 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white flex-shrink-0">
+              <span class="material-symbols-outlined text-xl">location_on</span>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-neutral-400">Global Headquarters</p>
+              <p class="text-sm font-semibold text-white">One Coca-Cola Plaza, Atlanta, GA 30313</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Clean Minimal Contact Form -->
+      <div class="lg:col-span-7">
+        <div class="glass-dark border border-white/10 p-8 sm:p-10 rounded-3xl backdrop-blur-xl relative shadow-2xl">
+          <div class="absolute -top-12 -right-12 w-48 h-48 bg-crimson/15 rounded-full blur-3xl pointer-events-none"></div>
+
+          <form id="contact-form" class="space-y-5 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs uppercase font-bold tracking-wider text-neutral-300 mb-2" for="contact-name">Your Name</label>
+                <input type="text" id="contact-name" required placeholder="e.g. John Doe" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-crimson focus:ring-1 focus:ring-crimson transition-all"/>
+              </div>
+              <div>
+                <label class="block text-xs uppercase font-bold tracking-wider text-neutral-300 mb-2" for="contact-email">Email Address</label>
+                <input type="email" id="contact-email" required placeholder="e.g. john@example.com" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-crimson focus:ring-1 focus:ring-crimson transition-all"/>
+              </div>
+            </div>
+
+            <!-- Topic Dropdown: Premium Cinematic Coca-Cola Style -->
+            <div class="relative" id="topic-dropdown-wrapper">
+              <label class="block text-xs uppercase font-bold tracking-wider text-neutral-300 mb-2" id="topic-label">Topic</label>
+              
+              <!-- Hidden native select for form serialization & accessibility -->
+              <select id="contact-subject" name="contact-subject" class="sr-only" tabindex="-1" aria-hidden="true">
+                <option value="General Inquiry" selected>General Inquiry</option>
+                <option value="Product Feedback & Suggestions">Product Feedback & Suggestions</option>
+                <option value="Taste & Product Experience">Taste & Product Experience</option>
+                <option value="Product Quality Issue">Product Quality Issue</option>
+                <option value="Ingredients & Nutrition">Ingredients & Nutrition</option>
+                <option value="New Product Ideas">New Product Ideas</option>
+                <option value="Packaging & Sustainability">Packaging & Sustainability</option>
+                <option value="Marketing & Collaborations">Marketing & Collaborations</option>
+                <option value="Events & Sponsorships">Events & Sponsorships</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <!-- Custom Dropdown Trigger Button -->
+              <button
+                type="button"
+                id="topic-dropdown-btn"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="topic-label topic-selected-text"
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-crimson/40 hover:border-crimson text-white flex items-center justify-between text-sm transition-all focus:outline-none focus:ring-1 focus:ring-crimson shadow-[0_0_12px_rgba(234,0,8,0.12)] hover:shadow-[0_0_16px_rgba(234,0,8,0.25)] group cursor-pointer"
+              >
+                <span id="topic-selected-text" class="font-medium text-white flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-crimson shadow-[0_0_8px_#ea0008]"></span>
+                  <span id="topic-selected-label">General Inquiry</span>
+                </span>
+                <span class="material-symbols-outlined text-neutral-400 group-hover:text-white transition-transform duration-300 text-xl" id="topic-dropdown-arrow">
+                  expand_more
+                </span>
+              </button>
+
+              <!-- Custom Dropdown Menu -->
+              <div
+                id="topic-dropdown-menu"
+                role="listbox"
+                aria-labelledby="topic-label"
+                class="absolute left-0 right-0 top-full mt-2 bg-midnight/95 border border-crimson/50 rounded-xl backdrop-blur-2xl shadow-[0_15px_35px_rgba(0,0,0,0.85),0_0_20px_rgba(188,0,5,0.25)] overflow-hidden hidden z-50 max-h-64 overflow-y-auto custom-dropdown-scroll transition-all duration-200"
+              >
+                <ul class="py-1.5 divide-y divide-white/5" role="presentation">
+                  <li role="option" aria-selected="true" data-value="General Inquiry" class="topic-option is-selected px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors bg-crimson text-white font-semibold">
+                    <span>General Inquiry</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Product Feedback & Suggestions" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Product Feedback & Suggestions</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Taste & Product Experience" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Taste & Product Experience</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Product Quality Issue" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Product Quality Issue</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Ingredients & Nutrition" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Ingredients & Nutrition</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="New Product Ideas" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>New Product Ideas</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Packaging & Sustainability" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Packaging & Sustainability</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Marketing & Collaborations" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Marketing & Collaborations</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Events & Sponsorships" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Events & Sponsorships</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                  <li role="option" aria-selected="false" data-value="Other" class="topic-option px-4 py-2.5 text-sm cursor-pointer flex items-center justify-between transition-colors text-neutral-300 hover:text-white hover:bg-crimson/20">
+                    <span>Other</span>
+                    <span class="material-symbols-outlined text-sm text-frost checkmark-icon hidden">check</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs uppercase font-bold tracking-wider text-neutral-300 mb-2" for="contact-message">Message</label>
+              <textarea id="contact-message" rows="4" required placeholder="How can we help refresh your day?" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-crimson focus:ring-1 focus:ring-crimson transition-all resize-none"></textarea>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <button type="submit" id="contact-submit-btn" class="w-full sm:w-auto px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-crimson hover:bg-crimson-glow border border-crimson-glow/40 transition-all shadow-glow-red hover:scale-105 flex items-center justify-center gap-2 cursor-pointer">
+                <span>Send Message</span>
+                <span class="material-symbols-outlined text-sm">send</span>
+              </button>
+              <div id="contact-status-msg" class="text-xs text-frost font-medium hidden">
+                Thank you! Your message has been sent.
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer: Dark Obsidian with Red Accent Line -->
+<footer class="bg-obsidian text-neutral-400 py-16 border-t border-white/10 text-sm relative">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<!-- Red brand accent accent line -->
+<div class="w-16 h-1 bg-crimson rounded-full mb-12 shadow-glow-red"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+<div class="space-y-4 md:col-span-1">
+<span class="text-white text-3xl font-extrabold font-coke-headline italic tracking-tight drop-shadow-[0_0_12px_rgba(234,0,8,0.5)]">Coca-Cola</span>
+<p class="text-xs text-neutral-400 leading-relaxed font-light">
+            Refreshing the world and crafting moments of joy. Always served chilled for peak effervescence.
+          </p>
+</div>
+<div>
+<h5 class="text-white font-bold uppercase tracking-widest text-xs mb-4">Beverages</h5>
+<ul class="space-y-2.5 text-xs font-light">
+<li><a class="hover:text-white transition-colors" href="#collection">Coca-Cola Original</a></li>
+<li><a class="hover:text-white transition-colors" href="#collection">Coca-Cola Zero Sugar</a></li>
+<li><a class="hover:text-white transition-colors" href="#collection">Diet Coke</a></li>
+<li><a class="hover:text-white transition-colors" href="#collection">Flavors &amp; Limited Drops</a></li>
+<li><a class="hover:text-white transition-colors cursor-pointer text-crimson-glow font-bold" href="#" id="footer-export-trigger">Export Animation as Video</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold uppercase tracking-widest text-xs mb-4">Heritage &amp; Impact</h5>
+<ul class="space-y-2.5 text-xs font-light">
+<li><a class="hover:text-white transition-colors" href="#story">Our History Since 1886</a></li>
+<li><a class="hover:text-white transition-colors" href="#moments">World Without Waste</a></li>
+<li><a class="hover:text-white transition-colors" href="#experience">Global Community</a></li>
+<li><a class="hover:text-white transition-colors" href="#experience">Careers</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold uppercase tracking-widest text-xs mb-4">Connect</h5>
+<p class="text-xs mb-4 font-light text-neutral-400">Join the movement and celebrate every sip.</p>
+<div class="flex items-center space-x-3">
+<span class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white cursor-pointer hover:bg-crimson hover:border-crimson transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">share</span>
+</span>
+<span class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white cursor-pointer hover:bg-crimson hover:border-crimson transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">public</span>
+</span>
+<span class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white cursor-pointer hover:bg-crimson hover:border-crimson transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">mail</span>
+</span>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
+<p>© 2025 The Coca-Cola Company. All rights reserved.</p>
+<div class="flex items-center space-x-6">
+<a class="hover:text-neutral-300 transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-neutral-300 transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-neutral-300 transition-colors" href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</footer>
+
+  <!-- Video Export Modal -->
+  <div id="video-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title">Export Animation Video</h3>
+          <span class="modal-subtitle">Direct WebM 1080p stream generated from 300 frames</span>
+        </div>
+        <button id="close-modal-btn" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="recording-progress-container" class="recording-progress">
+          <div class="recording-spinner"></div>
+          <div class="recording-status">
+            <h4 id="record-status-text">Recording 300 frames into video stream...</h4>
+            <div class="record-progress-track">
+              <div id="record-progress-fill" class="record-progress-fill"></div>
+            </div>
+            <span id="record-percentage">0%</span>
+          </div>
+        </div>
+
+        <div id="video-preview-container" class="video-preview-container hidden">
+          <video id="exported-video" controls autoplay loop playsinline class="video-player"></video>
+          <div class="video-actions">
+            <a href="coca_animation.mp4" download="coca_animation.mp4" class="primary-btn" title="Download Pre-rendered 1080p MP4 Video">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+              </svg>
+              <span>Download MP4 (15.4 MB)</span>
+            </a>
+            <a id="download-video-btn" class="secondary-btn" download="coca-cola-300-frames-animation.webm">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+              </svg>
+              <span>Download WebM</span>
+            </a>
+            <button id="copy-video-link-btn" class="secondary-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+              </svg>
+              <span>Copy MP4 URL</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
